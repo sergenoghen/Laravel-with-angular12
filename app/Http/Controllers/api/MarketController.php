@@ -11,7 +11,7 @@ class MarketController extends Controller
     //
     function customers()
     {
-        return CustomersModel::select('*')->where(CustomersModel::CUSTOMERID, '>', 0)->paginate(10);
+        return CustomersModel::select('*')->where(CustomersModel::CUSTOMERID, '>', 0)->paginate(5);
     }
 
     function details($id)
