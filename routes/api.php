@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\MarketController;
+use App\Http\Controllers\api\OrdersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,5 +32,22 @@ Route::get('/customers/details/{id}',
         $app = app();
         $controller = $app->make(MarketController::class, [ $id]);
         return $controller->callAction('details',[$id]);
+    }
+);
+
+
+Route::get('/', 
+    function(Request $req){
+        $app = app();
+        $controller = $app->make(MarketController::class, []);
+        return $controller->callAction('index',[]);
+    }
+);
+
+Route::get('/customers/{id}/orders',
+    function($id,Request $req){
+        $app = app();
+        $controller = $app->make(OrdersController::class, [ $id]);
+        return $controller->callAction('orders',[$id]);
     }
 );

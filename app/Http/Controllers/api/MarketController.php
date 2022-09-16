@@ -11,7 +11,9 @@ class MarketController extends Controller
     //
     function customers()
     {
-        return CustomersModel::select('*')->where(CustomersModel::CUSTOMERID, '>', 0)->paginate(5);
+       $customers = CustomersModel::select('*')->limit(12); 
+       return $customers->paginate(10);
+        // return CustomersModel::select('*')->where(CustomersModel::COUNTRY, 'Like', '%UK%')->paginate(6);
     }
 
     function details($id)
@@ -19,4 +21,10 @@ class MarketController extends Controller
         $sql = CustomersModel::select('*')->where(CustomersModel::CUSTOMERID, $id);
         return $sql->first();
     }
+
+    function index()
+    {
+        return json_encode(['current_page'=>'API root index']);
+    }
+
 }
