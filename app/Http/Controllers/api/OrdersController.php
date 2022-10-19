@@ -8,6 +8,7 @@ use App\Models\marketModels\OrdersModel;
 use App\Models\marketModels\OrdersDetailsModel;
 use App\Models\marketModels\OrdersProductsModel;
 use App\Models\marketModels\EmployeesModel;
+use App\Models\marketModels\CategoriesModel;
 
 class OrdersController extends Controller
 {
@@ -32,8 +33,7 @@ class OrdersController extends Controller
         $emplouees = EmployeesModel::select('*')->where(EmployeesModel::EMPLOYEEID, $employeesID); 
         return $emplouees->get();
     }
-
-    ///////////////////
+    
     function completeOrders($customerId)
     {
         $orders = OrdersModel::select('*')->where(OrdersModel::CUSTOMERID, $customerId)->get(); 
@@ -49,5 +49,10 @@ class OrdersController extends Controller
         //$employees = EmployeesModel::select('*')->whereIn(EmployeesModel::EMPLOYEEID, $employeesIDs)->get(); 
 
         return ['order'=>$orders, 'employee'=>$employees];
+    }
+
+    function categories($categoryId){
+        $categories = CategoriesModel::select('*')->where(CategoriesModel::CATEGORYID, $categoryId)->get();
+        return $categories;
     }
 }

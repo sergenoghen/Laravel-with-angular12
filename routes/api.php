@@ -78,11 +78,19 @@ Route::get('/customer/employees/{employeeID}', //details of a product
 );
 
 
-///for test
+///in use ?
 Route::get('/customer/orders/test/{customerID}', 
     function($customerID,Request $req){
         $app = app();
         $controller = $app->make(OrdersController::class, [  $customerID]);
         return $controller->callAction('completeOrders',[ $customerID]);
+    }
+);
+
+Route::get('customer/orders/product/category/{categoryId}',
+    function($categoryId, Request $req){
+        $app = app();
+        $controller = $app->make(OrdersController::class, [  $categoryId]);
+        return $controller->callAction('categories',[ $categoryId]);
     }
 );
