@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/customers', 
+Route::get('/customer', 
     function(Request $req){
         $app = app();
         $controller = $app->make(MarketController::class, [$req]);
@@ -27,7 +27,7 @@ Route::get('/customers',
     }
 );
 
-Route::get('/customers/details/{id}', 
+Route::get('/customer/details/{id}', 
     function($id,Request $req){
         $app = app();
         $controller = $app->make(MarketController::class, [ $id]);
@@ -44,10 +44,45 @@ Route::get('/',
     }
 );
 
-Route::get('/customers/{id}/orders',
+Route::get('/customer/{id}/orders', //orders for a customer
     function($id,Request $req){
         $app = app();
         $controller = $app->make(OrdersController::class, [ $id]);
-        return $controller->callAction('orders',[$id]);
+        return $controller->callAction('completeOrders',[$id]);
+    }
+);
+
+Route::get('/customer/orders/{orderID}', //details of an order
+    function($orderID,Request $req){
+        $app = app();
+        $controller = $app->make(OrdersController::class, [  $orderID]);
+        return $controller->callAction('ordersDetails',[ $orderID]);
+    }
+);
+
+Route::get('/customer/products/{productID}', //details of a product
+    function($productID,Request $req){
+        $app = app();
+        $controller = $app->make(OrdersController::class, [  $productID]);
+        return $controller->callAction('productsDetails',[ $productID]);
+    }
+);
+
+
+Route::get('/customer/employees/{employeeID}', //details of a product
+    function($employeeID,Request $req){
+        $app = app();
+        $controller = $app->make(OrdersController::class, [  $employeeID]);
+        return $controller->callAction('employeesDetails',[ $employeeID]);
+    }
+);
+
+
+///for test
+Route::get('/customer/orders/test/{customerID}', 
+    function($customerID,Request $req){
+        $app = app();
+        $controller = $app->make(OrdersController::class, [  $customerID]);
+        return $controller->callAction('completeOrders',[ $customerID]);
     }
 );
