@@ -12,7 +12,7 @@ class CategoriesModel extends Model
     * @var string $table
     */
    protected $table = 'categories';
-   public $timestamps = true;
+   public $timestamps = false;
     /**
     * @var array $fillable
     */

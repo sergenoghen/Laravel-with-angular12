@@ -94,3 +94,11 @@ Route::get('customer/orders/product/category/{categoryId}',
         return $controller->callAction('categories',[ $categoryId]);
     }
 );
+
+Route::post('customer/category/create',
+    function( Request $req){
+        $app = app();
+        $controller = $app->make(OrdersController::class, []);
+        return $controller->callAction('createCategory',[$req]);
+    }
+);

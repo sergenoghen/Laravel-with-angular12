@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\api;
 
+use Illuminate\Foundation\Exceptions\Handler as Exception;
+use Illuminate\Foundation\Exceptions\HttpResponseException as HttpResponseException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\marketModels\OrdersModel;
@@ -52,7 +54,28 @@ class OrdersController extends Controller
     }
 
     function categories($categoryId){
-        $categories = CategoriesModel::select('*')->where(CategoriesModel::CATEGORYID, $categoryId)->get();
+        $categories = CategoriesModel::select('*')->where(CategoriesModel::CATEGORYID, $categoryId)->first();
         return $categories;
+    }
+
+    function createCategory(Request $req){
+        $data = $req->all();
+        $data[ 'CategoryID' ] = null;
+
+        $newCategory = [
+            "CategoryName" =>$data[ 'CategoryName' ] , 
+            "Description" =>$data[ 'Description' ] ,
+        ];
+
+        try{
+            $postCat = CategoriesModel::firstOrCreate($newCategory);
+        }catch(\HttpResponseException $resp ){
+            return json_encode(['error'=>$resp->getResponse()]);
+        }
+        
+        return  [
+            'Category'=>$postCat,
+            'message'=>$postCat->CategoryID > 0 ? 'Category '. $postCat->CategoryID.' created' : 'Error occured',
+        ];
     }
 }

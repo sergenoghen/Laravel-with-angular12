@@ -11,8 +11,8 @@ class MarketController extends Controller
     //
     function customers()
     {
-       $customers = CustomersModel::select('*')->limit(12); 
-       return $customers->paginate(10);
+       $customers = CustomersModel::select('*');
+       return $customers->paginate(12);
         // return CustomersModel::select('*')->where(CustomersModel::COUNTRY, 'Like', '%UK%')->paginate(6);
     }
 
